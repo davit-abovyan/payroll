@@ -1,3 +1,5 @@
+use payroll_test;
+
 DROP TABLE IF EXISTS payslip;
 DROP TABLE IF EXISTS absence;
 DROP TABLE IF EXISTS contract;
@@ -6,7 +8,7 @@ DROP TABLE IF EXISTS employee;
 DROP TABLE IF EXISTS department;
 
 CREATE TABLE department(
-  code VARCHAR(10) CHARSET ascii PRIMARY KEY,
+  department_code VARCHAR(10) CHARSET ascii PRIMARY KEY,
   department_name VARCHAR(255) NOT NULL DEFAULT 'New Department',
   cost_center VARCHAR(10) CHARSET ascii
 );
@@ -18,21 +20,21 @@ create table employee(
   birthday date,
   department_code VARCHAR(10) CHARSET ascii,
   INDEX department_index (department_code),
-  CONSTRAINT employee_department_code_fk FOREIGN KEY (department_code) REFERENCES department(code)
+  CONSTRAINT employee_department_code_fk FOREIGN KEY (department_code) REFERENCES department(department_code)
 );
 
 CREATE TABLE role(
-  id SMALLINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+  id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
   position_name VARCHAR(255) NOT NULL,
   description TEXT,
   salary_range_top INT UNSIGNED NOT NULL DEFAULT 0,
-  salary_range_bootom INT UNSIGNED NOT NULL DEFAULT 0
+  salary_range_bottom INT UNSIGNED NOT NULL DEFAULT 0
 );
 
 CREATE TABLE contract(
   id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
   ssn CHAR(10) CHARSET ascii NOT NULL,
-  role_id SMALLINT UNSIGNED NOT NULL,
+  role_id INT UNSIGNED NOT NULL,
   start_date DATE NOT NULL,
   end_date DATE,
   salary INT UNSIGNED NOT NULL DEFAULT 0,
@@ -56,8 +58,9 @@ CREATE TABLE payslip(
   bonus INT UNSIGNED NOT NULL DEFAULT 0,
   ssp INT UNSIGNED NOT NULL DEFAULT 0,
   it INT UNSIGNED NOT NULL DEFAULT 0,
+  army INT UNSIGNED NOT NULL DEFAULT 0,
   absence INT UNSIGNED,
-  INDEX payslip_index (period,ssn),
+  PRIMARY KEY payslip_index (period,ssn),
   CONSTRAINT payslip_ssn_fk FOREIGN KEY (ssn) REFERENCES employee(ssn) ON DELETE CASCADE,
   CONSTRAINT payslip_absence_fk FOREIGN KEY (absence) REFERENCES absence(id)
 );
