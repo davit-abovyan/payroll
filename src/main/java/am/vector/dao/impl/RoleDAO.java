@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
+import java.util.List;
 
 @Component
 public class RoleDAO extends NamedParameterJdbcDaoSupport implements Role {
@@ -49,13 +50,19 @@ public class RoleDAO extends NamedParameterJdbcDaoSupport implements Role {
     }
 
     /**
-     * @see Role#read(int)
+     * @see Role#read(long)
      */
     @Override
-    public RoleModel read(int id) {
+    public RoleModel read(long id) {
         final String query = "SELECT * FROM role WHERE id = ? LIMIT 1";
         return getJdbcTemplate().queryForObject(query, new Object[]{id},new RoleRowMapper());
 
+    }
+
+    @Override
+    public List<RoleModel> getAll() {
+        final String query = "SELECT * FROM role";
+        return getJdbcTemplate().query(query, new Object[]{},new RoleRowMapper());
     }
 
     /**

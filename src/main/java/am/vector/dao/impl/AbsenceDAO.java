@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.List;
 
 @Component
 public class AbsenceDAO extends NamedParameterJdbcDaoSupport implements Absence {
@@ -55,6 +56,46 @@ public class AbsenceDAO extends NamedParameterJdbcDaoSupport implements Absence 
     public AbsenceModel read(long id) {
         final String query = "SELECT * FROM absence WHERE id = ? LIMIT 1";
         return getJdbcTemplate().queryForObject(query, new Object[]{id},new AbsenceRowMapper());
+    }
+
+    /**
+     * @see Absence#getAllByEmployeeByPeriod(java.lang.String, java.lang.String)
+     * @return
+     */
+    @Override
+    public List<AbsenceModel> getAllByEmployeeByPeriod(String period, String ssn) {
+        final String query = "SELECT * FROM absence WHERE period = ? AND ssn = ?";
+        return getJdbcTemplate().query(query, new Object[]{period, ssn},new AbsenceRowMapper());
+
+    }
+
+    /**
+     * @see Absence#getAllByEmployee(java.lang.String)
+     */
+    @Override
+    public List<AbsenceModel> getAllByEmployee(String ssn) {
+        final String query = "SELECT * FROM absence WHERE ssn = ?";
+        return getJdbcTemplate().query(query, new Object[]{ssn},new AbsenceRowMapper());
+
+    }
+
+    /**
+     * @see Absence#getAlleByPeriod(java.lang.String)
+     */
+    @Override
+    public List<AbsenceModel> getAlleByPeriod(String period) {
+        final String query = "SELECT * FROM absence WHERE period = ? ";
+        return getJdbcTemplate().query(query, new Object[]{period},new AbsenceRowMapper());
+
+    }
+
+    /**
+     * @see Absence#getAllAbsences()
+     */
+    @Override
+    public List<AbsenceModel> getAllAbsences() {
+        final String query = "SELECT * FROM absence LIMIT 1000";
+        return getJdbcTemplate().query(query, new Object[]{},new AbsenceRowMapper());
     }
 
     /**

@@ -6,8 +6,26 @@ public class EmployeeModel {
     private String ssn;
     private String fullName;
     private String email;
-    private LocalDate birthDay;
+    private LocalDate birthDay = LocalDate.parse("1900-01-01");
     private String departmentCode;
+    private LocalDate hireDate;
+    private LocalDate terminationDate = LocalDate.parse("1900-01-01");
+
+    public LocalDate getTerminationDate() {
+        return terminationDate;
+    }
+
+    public void setTerminationDate(LocalDate terminationDate) {
+        this.terminationDate = terminationDate;
+    }
+
+    public LocalDate getHireDate() {
+        return hireDate;
+    }
+
+    public void setHireDate(LocalDate hireDate) {
+        this.hireDate = hireDate;
+    }
 
     public EmployeeModel() {
     }
@@ -19,12 +37,14 @@ public class EmployeeModel {
         this.departmentCode = departmentCode;
     }
 
-    public EmployeeModel(String ssn, String fullName, String email, LocalDate birthDay, String departmentCode) {
+    public EmployeeModel(String ssn, String fullName, String email, LocalDate birthDay,
+                         String departmentCode, LocalDate hireDate) {
         this.ssn = ssn;
         this.fullName = fullName;
         this.email = email;
         this.birthDay = birthDay;
         this.departmentCode = departmentCode;
+        this.hireDate = hireDate;
     }
 
     public String getSSN() {

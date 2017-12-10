@@ -2,6 +2,8 @@ package am.vector.dao;
 
 import am.vector.model.RoleModel;
 
+import java.util.List;
+
 public interface Role {
 
     /**
@@ -12,11 +14,17 @@ public interface Role {
     public long create(RoleModel absenceModel);
 
     /**
-     * Return a role recorded in DB with provided id
+     * Return the role with provided id
      * @param id corresponding to role
      * @return the role with specified id
      */
-    public RoleModel read(int id);
+    public RoleModel read(long id);
+
+    /**
+     * Return all recorded roles
+     * @return list of roles
+     */
+    public List<RoleModel> getAll();
 
     /**
      * Updated the recorder role in DB

@@ -1,4 +1,4 @@
-use payroll_test;
+use payroll;
 
 DROP TABLE IF EXISTS payslip;
 DROP TABLE IF EXISTS absence;
@@ -8,18 +8,19 @@ DROP TABLE IF EXISTS employee;
 DROP TABLE IF EXISTS department;
 
 CREATE TABLE department(
-  department_code VARCHAR(10) CHARSET ascii PRIMARY KEY,
+  department_code VARCHAR(10) PRIMARY KEY,
   department_name VARCHAR(255) NOT NULL DEFAULT 'New Department',
-  cost_center VARCHAR(10) CHARSET ascii
+  cost_center VARCHAR(10)
 );
 
 create table employee(
-  ssn CHAR(10) CHARSET ascii PRIMARY KEY,
-  full_name varchar(255)  not null,
-  email varchar(50) charset ascii unique,
-  birthday date,
-  department_code VARCHAR(10) CHARSET ascii,
-  INDEX department_index (department_code),
+  ssn CHAR(10) PRIMARY KEY,
+  full_name VARCHAR(255)  NOT NULL,
+  email VARCHAR(50) UNIQUE ,
+  birthday DATE,
+  hire_date DATE NOT NULL,
+  termination_date DATE,
+  department_code VARCHAR(10),
   CONSTRAINT employee_department_code_fk FOREIGN KEY (department_code) REFERENCES department(department_code)
 );
 
@@ -33,12 +34,11 @@ CREATE TABLE role(
 
 CREATE TABLE contract(
   id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-  ssn CHAR(10) CHARSET ascii NOT NULL,
+  ssn CHAR(10) NOT NULL,
   role_id INT UNSIGNED NOT NULL,
   start_date DATE NOT NULL,
   end_date DATE,
   salary INT UNSIGNED NOT NULL DEFAULT 0,
-  INDEX ssn_index (ssn),
   CONSTRAINT contract_ssn_fk FOREIGN KEY (ssn) REFERENCES employee(ssn) ON DELETE CASCADE,
   CONSTRAINT contract_role_id_fk FOREIGN KEY (role_id) REFERENCES role(id) ON DELETE CASCADE
 );
@@ -47,23 +47,27 @@ CREATE TABLE absence(
   id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
   leave_type ENUM('VAC','SKL','MTL','UNP') NOT NULL DEFAULT 'VAC',
   amount INT UNSIGNED DEFAULT 0,
+  ssn CHAR(4) NOT NULL,
+  period CHAR(4) NOT NULL,
   start_date DATE NOT NULL,
-  end_date DATE NOT NULL
+  end_date DATE,
+  INDEX absence_period_ssn (period, ssn),
+  CONSTRAINT absence_ssn_fk FOREIGN KEY (ssn) REFERENCES employee(ssn) ON DELETE CASCADE
 );
 
 CREATE TABLE payslip(
   period CHAR(4) NOT NULL,
-  ssn CHAR(10) CHARSET ascii NOT NULL,
+  ssn CHAR(10) NOT NULL,
   wage INT UNSIGNED NOT NULL DEFAULT 0,
   bonus INT UNSIGNED NOT NULL DEFAULT 0,
   ssp INT UNSIGNED NOT NULL DEFAULT 0,
   it INT UNSIGNED NOT NULL DEFAULT 0,
   army INT UNSIGNED NOT NULL DEFAULT 0,
-  absence INT UNSIGNED,
   PRIMARY KEY payslip_index (period,ssn),
-  CONSTRAINT payslip_ssn_fk FOREIGN KEY (ssn) REFERENCES employee(ssn) ON DELETE CASCADE,
-  CONSTRAINT payslip_absence_fk FOREIGN KEY (absence) REFERENCES absence(id)
+  CONSTRAINT payslip_ssn_fk FOREIGN KEY (ssn) REFERENCES employee(ssn) ON DELETE CASCADE
 );
 
 #show CHARACTER SET ;
 #show COLLATION WHERE charset='utf8';
+
+#SHOW create table contract;

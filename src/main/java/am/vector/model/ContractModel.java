@@ -1,5 +1,7 @@
 package am.vector.model;
 
+import am.vector.util.SafeSet;
+
 import java.time.LocalDate;
 
 public class ContractModel {
@@ -7,18 +9,24 @@ public class ContractModel {
     private String ssn;
     private long roleId;
     private LocalDate startDate;
-    private LocalDate endDate;
+    private LocalDate endDate = LocalDate.parse("1900-01-01");
     private int salary;
 
     public ContractModel() {
     }
 
-    public ContractModel(long id, String ssn, long roleId, LocalDate startDate, int salary) {
-
-        this.id = id;
+    public ContractModel(String ssn, long roleId, LocalDate startDate, int salary) {
         this.ssn = ssn;
         this.roleId = roleId;
         this.startDate = startDate;
+        this.salary = salary;
+    }
+
+    public ContractModel(String ssn, long roleId, LocalDate startDate, LocalDate endDate, int salary) {
+        this.ssn = ssn;
+        this.roleId = roleId;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.salary = salary;
     }
 

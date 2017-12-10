@@ -25,6 +25,9 @@ public class ContractService extends BaseService {
 
     public long add(ContractModel contractModel){
         try{
+            if(!contract.isInRange(contractModel.getRoleId(), contractModel.getSalary()))
+                throw new ServiceException("The salary " + contractModel.getSalary() +
+                " is not in the range of allowed salaries for role " + contractModel.getRoleId());
             return contract.create(contractModel);
         } catch (RuntimeException e){
             log.warn(e.getMessage());
@@ -41,9 +44,19 @@ public class ContractService extends BaseService {
         }
     }
 
-    public List<Map<String,Object>> getAllCurrents(){
+
+    public boolean update(ContractModel contractModel){
         try{
-            return contract.getCurrents();
+            return contract.update(contractModel);
+        } catch (RuntimeException e){
+            log.warn(e.getMessage());
+            throw new ServiceException("Error:");
+        }
+    }
+
+    public ContractModel getEmployeeCurrent(String ssn){
+        try{
+            return contract.getEmployeeCurrent(ssn);
         } catch (RuntimeException e){
             log.warn(e.getMessage());
             throw new ServiceException("Error:");

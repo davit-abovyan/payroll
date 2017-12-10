@@ -22,6 +22,18 @@ public class ContractDAO extends NamedParameterJdbcDaoSupport implements Contrac
     public ContractDAO(DataSource dataSource) {
         this.setDataSource(dataSource);
     }
+
+    /**
+     * @see Contract#isInRange(long, int)
+     */
+    @Override
+    public boolean isInRange(long roleId, int salary) {
+        final String query = "SELECT count(id) FROM role " +
+                " WHERE id = ? AND ( ? > salary_range_top AND ? < salary_range_bottom) LIMIT 1";
+
+        return getJdbcTemplate().queryForObject(query, Boolean.class, new Object[]{roleId, salary, salary});
+    }
+
     /**
      * @see Contract#create(am.vector.model.ContractModel)
      */
@@ -60,12 +72,12 @@ public class ContractDAO extends NamedParameterJdbcDaoSupport implements Contrac
     }
 
     /**
-     * @see Contract#getCurrents()
+     * @see Contract#getEmployeeCurrent(java.lang.String)
      */
     @Override
-    public List<Map<String,Object>> getCurrents() {
-        final String query = "SELECT * FROM contract WHERE end_date IS NULL";
-        return getJdbcTemplate().queryForList(query, new ContractRowMapper());
+    public ContractModel getEmployeeCurrent(String ssn) {
+        final String query = "SELECT * FROM contract WHERE ssn = ? AND end_date IS NULL";
+        return getJdbcTemplate().queryForObject(query, new Object[]{ssn}, new ContractRowMapper());
     }
 
     /**

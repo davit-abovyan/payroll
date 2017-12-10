@@ -41,12 +41,13 @@ public class DepartmentDAO extends NamedParameterJdbcDaoSupport implements Depar
     @Override
     public DepartmentModel read(String departmentCode) {
         final String query = "SELECT * FROM department WHERE department_code = ? LIMIT 1";
-        return getJdbcTemplate().queryForObject(query, new Object[]{departmentCode},new DepartmentRowMapper());
+        return getJdbcTemplate().queryForObject(query, new Object[]{departmentCode}, new DepartmentRowMapper());
     }
 
     @Override
     public List<DepartmentModel> getAll() {
-        return null;
+        final String query = "SELECT * FROM department";
+        return getJdbcTemplate().query(query, new Object[]{},new DepartmentRowMapper());
     }
 
     /**

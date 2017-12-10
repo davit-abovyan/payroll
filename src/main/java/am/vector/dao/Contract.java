@@ -8,6 +8,13 @@ import java.util.Map;
 public interface Contract {
 
     /**
+     * Check if the salary of new contract is within the allowed salary range of selected role
+     * @param roleId the id of role assigned to contract
+     * @param slary the salary of the contract
+     * @return true is the salary is within allowed salary range otherwise false
+     */
+    public boolean isInRange(long roleId, int slary);
+    /**
      * Record a new contract in DB
      * @param
      * @return id of new created contract
@@ -25,7 +32,7 @@ public interface Contract {
      * Returns all contracts which end date is null
      * @return
      */
-    public List<Map<String,Object>> getCurrents();
+    public ContractModel getEmployeeCurrent(String ssn);
 
     /**
      * Updated the recorder contract in DB

@@ -21,18 +21,37 @@ public interface Employee {
     public EmployeeModel read(String ssn);
 
     /**
-     * Returns all current employees within the department with provided id
-     * @param departmentCode
-     * @return
+     * Returns all employees including terminated
+     * @return list of employees
+     */
+    public List<EmployeeModel> getAll();
+
+    /**
+     * Returns all current employees
+     * @return list of employees
+     */
+    public List<EmployeeModel> getAllCurrent();
+
+    /**
+     * Returns all employees of provided department included terminated
+     * @param departmentCode the department code
+     * @return list of employees
      */
     public List<EmployeeModel> getAllByDepartment(String departmentCode);
 
     /**
+     * Returns all current employees of provided department
+     * @param departmentCode the department code
+     * @return list of employees
+     */
+    public List<EmployeeModel> getAllCurrentByDepartment(String departmentCode);
+
+    /**
      * Updated the recorder employee in DB
-     * @param
+     * @param employeeModel the employee to be updated
      * @return true if update is successfully applied, otherwise false
      */
-    public boolean update(EmployeeModel absenceModel);
+    public boolean update(EmployeeModel employeeModel);
 
     /**
      * Removes an employee recoded from DB with provided ssn

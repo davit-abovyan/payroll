@@ -6,6 +6,16 @@ import java.time.LocalDate;
 
 public class AbsenceModel {
     private long id;
+    private String ssn;
+
+    public String getSsn() {
+        return ssn;
+    }
+
+    public void setSsn(String ssn) {
+        this.ssn = ssn;
+    }
+
     private LeaveType leaveType;
     private int amount;
     private LocalDate startDate;
@@ -14,14 +24,16 @@ public class AbsenceModel {
     public AbsenceModel() {
     }
 
-    public AbsenceModel(LeaveType leaveType, LocalDate startDate, LocalDate endDate) {
+    public AbsenceModel(LeaveType leaveType, String ssn, LocalDate startDate, LocalDate endDate) {
         this.leaveType = leaveType;
+        this.ssn = ssn;
         this.startDate = startDate;
         this.endDate = endDate;
     }
 
-    public AbsenceModel(LeaveType leaveType, int amount, LocalDate startDate, LocalDate endDate) {
+    public AbsenceModel(LeaveType leaveType, String ssn, int amount, LocalDate startDate, LocalDate endDate) {
         this.leaveType = leaveType;
+        this.ssn = ssn;
         this.amount = amount;
         this.startDate = startDate;
         this.endDate = endDate;

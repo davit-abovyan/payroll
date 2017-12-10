@@ -1,65 +1,65 @@
 package am.vector.service;
 
-import am.vector.dao.Department;
+import am.vector.dao.Role;
 import am.vector.exception.ServiceException;
-import am.vector.model.DepartmentModel;
+import am.vector.model.RoleModel;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
+
 
 @Service
-public class DepartmentService extends BaseService {
-    private Logger log = Logger.getLogger(ContractService.class);
+public class RoleService {
+    private Logger log = Logger.getLogger(RoleService.class);
 
-    private Department department;
+    private Role role;
 
     @Autowired
-    public DepartmentService(Department department) {
-        this.department = department;
+    public void setPosition(Role role) {
+        this.role = role;
     }
 
-    public boolean add(DepartmentModel departmentModel){
+    public long add(RoleModel roleModel){
         try{
-            return department.create(departmentModel);
+            return role.create(roleModel);
         } catch (RuntimeException e){
             log.warn(e.getMessage());
             throw new ServiceException("Error:");
         }
     }
 
-    public DepartmentModel get(String code){
+    public RoleModel get(int id){
         try{
-            return department.read(code);
+            return role.read(id);
         } catch (RuntimeException e){
             log.warn(e.getMessage());
             throw new ServiceException("Error:");
         }
     }
 
-    public List<DepartmentModel> getAllDepartments(){
+    public List<RoleModel> getAll(){
         try{
-            return department.getAll();
+            return role.getAll();
         } catch (RuntimeException e){
             log.warn(e.getMessage());
             throw new ServiceException("Error:");
         }
     }
 
-    public boolean update(DepartmentModel departmentModel){
+    public boolean update(RoleModel roleModel){
         try{
-            return department.update(departmentModel);
+            return role.update(roleModel);
         } catch (RuntimeException e){
             log.warn(e.getMessage());
             throw new ServiceException("Error:");
         }
     }
 
-    public boolean remove(String code){
+    public boolean remove(long id){
         try{
-            return department.delete(code);
+            return role.delete(id);
         } catch (RuntimeException e){
             log.warn(e.getMessage());
             throw new ServiceException("Error:");

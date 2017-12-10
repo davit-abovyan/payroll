@@ -10,17 +10,7 @@ public class RoleModel {
     public RoleModel() {
     }
 
-    public RoleModel(long id, String positionName, int salaryRangeTop, int salaryRangeBottom) {
-
-        this.id = id;
-        this.positionName = positionName;
-        this.salaryRangeTop = salaryRangeTop;
-        this.salaryRangeBottom = salaryRangeBottom;
-    }
-
-    public RoleModel(long id, String positionName, String description, int salaryRangeTop, int salaryRangeBottom) {
-
-        this.id = id;
+    public RoleModel(String positionName, String description, int salaryRangeTop, int salaryRangeBottom) {
         this.positionName = positionName;
         this.description = description;
         this.salaryRangeTop = salaryRangeTop;

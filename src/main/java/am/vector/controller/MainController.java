@@ -19,7 +19,7 @@ import java.time.LocalDate;
 public class MainController {
     private Logger log = Logger.getLogger(MainController.class);
 
-    private AbsenceService absenceService;
+//    private AbsenceService absenceService;
     private ContractService contractService;
 
     @Autowired
@@ -27,21 +27,21 @@ public class MainController {
         this.contractService = contractService;
     }
 
-    @Autowired
-    public void setAbsenceService(AbsenceService absenceService) {
-        this.absenceService = absenceService;
-    }
+//    @Autowired
+//    public void setAbsenceService(AbsenceService absenceService) {
+//        this.absenceService = absenceService;
+//    }
 
     @RequestMapping("/")
     public ModelAndView index(HttpSession session){
-        AbsenceModel absenceModel = new AbsenceModel(LeaveType.MTL,1000, LocalDate.now(),LocalDate.now());
-        long id = absenceService.add(absenceModel);
-        boolean deleted = absenceService.remove(id);
-
-        ContractModel contractModel = new ContractModel();
-
+//        AbsenceModel absenceModel = new AbsenceModel(LeaveType.MTL,1000, LocalDate.now(),LocalDate.now());
+//        long id = absenceService.add(absenceModel);
+//        boolean deleted = absenceService.remove(id);
+//
+//        ContractModel contractModel = new ContractModel();
+//
         ModelAndView modelAndView = new ModelAndView("index");
-        modelAndView.addObject("arg","Davit: "+id+" removed: "+deleted);
+//        modelAndView.addObject("arg","Davit: "+id+" removed: "+deleted);
         return modelAndView;
     }
 }

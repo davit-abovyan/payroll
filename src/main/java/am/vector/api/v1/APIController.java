@@ -5,6 +5,4 @@ import org.apache.log4j.Logger;
 
 public class APIController {
     protected Logger LOGGER = Logger.getLogger(APIController.class);
-
-
 }

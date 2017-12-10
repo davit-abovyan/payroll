@@ -15,6 +15,7 @@ public class EmployeeRowMapper implements RowMapper<EmployeeModel> {
         employeeModel.setEmail(resultSet.getString("email"));
         employeeModel.setBirthDay(resultSet.getDate("birthday").toLocalDate());
         employeeModel.setDepartmentCode(resultSet.getString("department_code"));
+        employeeModel.setHireDate(resultSet.getDate("hire_date").toLocalDate());
         return employeeModel;
     }
 }
