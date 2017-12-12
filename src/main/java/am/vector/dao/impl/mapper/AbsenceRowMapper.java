@@ -15,6 +15,8 @@ public class AbsenceRowMapper implements RowMapper<AbsenceModel> {
         AbsenceModel absenceModel = new AbsenceModel();
         absenceModel.setId(resultSet.getInt("id"));
         absenceModel.setLeaveType(LeaveType.valueOf(resultSet.getString("leave_type")));
+        absenceModel.setSsn(resultSet.getString("ssn"));
+        absenceModel.setPeriod(resultSet.getString("period"));
         absenceModel.setAmount(resultSet.getInt("amount"));
         absenceModel.setStartDate(resultSet.getDate("start_date").toLocalDate());
         absenceModel.setEndDate(resultSet.getDate("end_date").toLocalDate());

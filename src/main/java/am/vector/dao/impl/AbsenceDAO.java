@@ -31,14 +31,16 @@ public class AbsenceDAO extends NamedParameterJdbcDaoSupport implements Absence 
         long id = -1;
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        final String query = "INSERT  INTO absence (leave_type, amount, start_date, end_date)" +
-                " VALUES ( ?, ?, ?, ?)";
+        final String query = "INSERT  INTO absence (leave_type, ssn, period, amount, start_date, end_date)" +
+                " VALUES ( ?, ?, ?, ?, ?, ?)";
         int result = getJdbcTemplate().update( connection -> {
             PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, absenceModel.getLeaveType().toString());
-            ps.setInt(2, absenceModel.getAmount());
-            ps.setDate(3, java.sql.Date.valueOf(absenceModel.getStartDate()));
-            ps.setDate(4, java.sql.Date.valueOf(absenceModel.getEndDate()));
+            ps.setString(2,absenceModel.getSsn());
+            ps.setString(3,absenceModel.getPeriod());
+            ps.setInt(4, absenceModel.getAmount());
+            ps.setDate(5, java.sql.Date.valueOf(absenceModel.getStartDate()));
+            ps.setDate(6, java.sql.Date.valueOf(absenceModel.getEndDate()));
             return ps;
         },keyHolder);
 
@@ -99,20 +101,32 @@ public class AbsenceDAO extends NamedParameterJdbcDaoSupport implements Absence 
     }
 
     /**
+     * @see Absence#getAbsenceDaysByEmployee(java.lang.String, java.lang.String)
+     */
+    @Override
+    public int getAbsenceDaysByEmployee(String ssn, String period) {
+        final String query = "SELECT sum(datediff(end_date, start_date)) AS days FROM absence" +
+                " WHERE ssn = ? AND period = ?";
+        return getJdbcTemplate().queryForObject(query, new Object[]{ssn, period}, Integer.class);
+    }
+
+    /**
      * @see Absence#update(am.vector.model.AbsenceModel)
      */
     @Override
     public boolean update(AbsenceModel absenceModel) {
         final String query = "UPDATE absence SET" +
-                " leave_type = ? , amount = ?, start_date = ?, end_date = ?" +
+                " leave_type = ? , ssn = ?, period = ?, amount = ?, start_date = ?, end_date = ?" +
                 "WHERE id = ?";
         return getJdbcTemplate().update(connection -> {
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, absenceModel.getLeaveType().toString());
-            ps.setInt(2, absenceModel.getAmount());
-            ps.setDate(3, java.sql.Date.valueOf(absenceModel.getStartDate()));
-            ps.setDate(4, java.sql.Date.valueOf(absenceModel.getEndDate()));
-            ps.setLong(5,absenceModel.getId());
+            ps.setString(2, absenceModel.getSsn());
+            ps.setString(3, absenceModel.getPeriod());
+            ps.setInt(4, absenceModel.getAmount());
+            ps.setDate(5, java.sql.Date.valueOf(absenceModel.getStartDate()));
+            ps.setDate(6, java.sql.Date.valueOf(absenceModel.getEndDate()));
+            ps.setLong(7,absenceModel.getId());
             return ps;
         }) == 1;
     }

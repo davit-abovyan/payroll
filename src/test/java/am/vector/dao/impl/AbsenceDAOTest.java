@@ -19,7 +19,7 @@ public class AbsenceDAOTest extends BaseIntegrationTest {
 
     @Before
     public void setup(){
-        absence = new AbsenceModel(LeaveType.MTL, 1000, LocalDate.now(),LocalDate.now().plusDays(3));
+        absence = new AbsenceModel(LeaveType.MTL, "1234567890", "1217", LocalDate.now(),LocalDate.now().plusDays(3));
     }
 
     @After

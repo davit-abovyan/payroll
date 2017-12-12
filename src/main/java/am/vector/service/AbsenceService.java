@@ -38,7 +38,7 @@ public class AbsenceService extends BaseService {
         }
     }
 
-    private List<AbsenceModel> getAllByEmployeeByPeriod(String period, String ssn){
+    public List<AbsenceModel> getAllByEmployeeByPeriod(String period, String ssn){
         try{
             return absence.getAllByEmployeeByPeriod(period,ssn);
         } catch (RuntimeException e){
@@ -47,7 +47,7 @@ public class AbsenceService extends BaseService {
         }
     }
 
-    private List<AbsenceModel> getAllByPeriod(String period){
+    public List<AbsenceModel> getAllByPeriod(String period){
         try{
             return absence.getAlleByPeriod(period);
         } catch (RuntimeException e){
@@ -56,7 +56,7 @@ public class AbsenceService extends BaseService {
         }
     }
 
-    private List<AbsenceModel> getAllByEmployee(String ssn){
+    public List<AbsenceModel> getAllByEmployee(String ssn){
         try{
             return absence.getAllByEmployee(ssn);
         } catch (RuntimeException e){
@@ -65,7 +65,7 @@ public class AbsenceService extends BaseService {
         }
     }
 
-    private List<AbsenceModel> getAllAbsences(){
+    public List<AbsenceModel> getAllAbsences(){
         try{
             return absence.getAllAbsences();
         } catch (RuntimeException e){

@@ -17,7 +17,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/v1.0/CONTRACT", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/v1.0/ABSENCE", produces = MediaType.APPLICATION_JSON_VALUE)
 public class APIAbsenceController extends APIController {
 
     AbsenceService absenceService;
@@ -29,9 +29,15 @@ public class APIAbsenceController extends APIController {
 
 
     @RequestMapping(method = RequestMethod.GET, value = "/{ID}")
-    public ResponseEntity getContract(@PathVariable int ID){
+    public ResponseEntity getAbsenceById(@PathVariable int ID){
         Gson gson = new Gson();
         return new ResponseEntity(gson.toJson(absenceService.get(ID)), HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/")
+    public ResponseEntity getAllAbsences(){
+        Gson gson = new Gson();
+        return new ResponseEntity(gson.toJson(absenceService.getAllAbsences()), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/search/")
@@ -47,9 +53,10 @@ public class APIAbsenceController extends APIController {
                                   @RequestParam("leaveType") String leaveType,
                                   @RequestParam("amount") int amount,
                                   @RequestParam("ssn") String ssn,
+                                  @RequestParam("period") String period,
                                   @RequestParam("startDate") String startDate,
                                   @RequestParam("endDate") String endDate){
-        AbsenceModel object = new AbsenceModel(LeaveType.valueOf(leaveType),ssn,amount,
+        AbsenceModel object = new AbsenceModel(LeaveType.valueOf(leaveType),ssn,period,amount,
                 LocalDate.parse(startDate),LocalDate.parse(endDate));
         absenceService.add(object);
         Gson gson = new Gson();
@@ -61,9 +68,10 @@ public class APIAbsenceController extends APIController {
                                    @RequestParam("leaveType") String leaveType,
                                    @RequestParam("amount") int amount,
                                    @RequestParam("ssn") String ssn,
+                                   @RequestParam("period") String period,
                                    @RequestParam("startDate") String startDate,
                                    @RequestParam("endDate") String endDate){
-        AbsenceModel object = new AbsenceModel(LeaveType.valueOf(leaveType),ssn,amount,
+        AbsenceModel object = new AbsenceModel(LeaveType.valueOf(leaveType), ssn, period, amount,
                 LocalDate.parse(startDate),LocalDate.parse(endDate));
         absenceService.update(object);
         Gson gson = new Gson();

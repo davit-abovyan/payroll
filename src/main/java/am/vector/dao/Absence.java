@@ -50,6 +50,14 @@ public interface Absence {
     public List<AbsenceModel> getAllAbsences();
 
     /**
+     * Returns not worked days of selected employee for period
+     * @param ssn social security number of employee
+     * @param period calculation period
+     * @return number of days not worked in the period
+     */
+    public int getAbsenceDaysByEmployee(String ssn, String period);
+
+    /**
      * Updated the recorder absence in DB
      * @param
      * @return true if update is successfully applied, otherwise false

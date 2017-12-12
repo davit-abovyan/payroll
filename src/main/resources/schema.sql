@@ -47,7 +47,7 @@ CREATE TABLE absence(
   id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
   leave_type ENUM('VAC','SKL','MTL','UNP') NOT NULL DEFAULT 'VAC',
   amount INT UNSIGNED DEFAULT 0,
-  ssn CHAR(4) NOT NULL,
+  ssn CHAR(10) NOT NULL,
   period CHAR(4) NOT NULL,
   start_date DATE NOT NULL,
   end_date DATE,

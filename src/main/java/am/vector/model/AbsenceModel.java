@@ -7,33 +7,35 @@ import java.time.LocalDate;
 public class AbsenceModel {
     private long id;
     private String ssn;
-
-    public String getSsn() {
-        return ssn;
-    }
-
-    public void setSsn(String ssn) {
-        this.ssn = ssn;
-    }
-
+    private String period;
     private LeaveType leaveType;
     private int amount;
     private LocalDate startDate;
     private LocalDate endDate;
 
+    public String getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(String period) {
+        this.period = period;
+    }
+
     public AbsenceModel() {
     }
 
-    public AbsenceModel(LeaveType leaveType, String ssn, LocalDate startDate, LocalDate endDate) {
+    public AbsenceModel(LeaveType leaveType, String ssn, String period, LocalDate startDate, LocalDate endDate) {
         this.leaveType = leaveType;
         this.ssn = ssn;
+        this.period = period;
         this.startDate = startDate;
         this.endDate = endDate;
     }
 
-    public AbsenceModel(LeaveType leaveType, String ssn, int amount, LocalDate startDate, LocalDate endDate) {
+    public AbsenceModel(LeaveType leaveType, String ssn, String period, int amount, LocalDate startDate, LocalDate endDate) {
         this.leaveType = leaveType;
         this.ssn = ssn;
+        this.period = period;
         this.amount = amount;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -46,6 +48,14 @@ public class AbsenceModel {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getSsn() {
+        return ssn;
+    }
+
+    public void setSsn(String ssn) {
+        this.ssn = ssn;
     }
 
     public LeaveType getLeaveType() {
